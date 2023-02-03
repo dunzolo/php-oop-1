@@ -6,21 +6,16 @@
         public $language;
         public $year;
         public $age_movie;
-        public $type;
+        public $types;
 
         //definisco il costruttore 
-        function __construct($_title, $_director, $_language, $_year, Type $_type){
+        function __construct($_title, $_director, $_language, $_year, Types $_types){
             //con il this faccio riferimento all'istanza creata
             $this -> title = $_title;
             $this -> director = $_director;
             $this -> language = $_language;
             $this -> year = $_year;
-            foreach($_type as $item){
-                foreach($item as $name){
-                    $this -> type .= $name.",";
-                }
-            }
-            $this -> type = rtrim($this -> type, ",");
+            $this -> types = $_types;
         }
 
         // calcolo l'eta del film
@@ -34,24 +29,24 @@
             return $this -> age_movie;
         }
 
-        // public static function trimEndComma(){
-        //     $this -> type = rtrim($this -> type, ",");
-        // }
+        public function printTypes(){
+            return implode(", ", $this -> types -> types);
+        }
     }
 
     // definisco una classe
-    class Type{
-        public $name;
-        
+    class Types{
+        public $types;
+
         //definisco il costruttore 
-        function __construct($_name){
-            $this -> name = $_name;
+        function __construct($_types){
+            $this -> types = $_types;
         }
     }
 
     // creo gli oggetti dell'istanza Movie, passando parametri obbligatori del costruttore
-    $movie_1 = new Movie('Titolo-1', 'Regista-1', 'Lingua-1', 1980, new Type (['comico', 'horror']));
-    $movie_2 = new Movie('Titolo-2', 'Regista-2', 'Lingua-2', 2000, new Type (['fantasy', 'horror']));
+    $movie_1 = new Movie('Titolo-1', 'Regista-1', 'Lingua-1', 1980, new Types (['comico', 'horror']));
+    $movie_2 = new Movie('Titolo-2', 'Regista-2', 'Lingua-2', 2000, new Types (['fantasy', 'horror']));
 ?>
 
 <!DOCTYPE html>
@@ -73,7 +68,7 @@
                         echo "Il titolo del film è: ".$movie_1 -> title."<br>";
                         echo "Il regista del film è: ".$movie_1 -> director."<br>";
                         echo "Il lingua originale del film è: ".$movie_1 -> language."<br>";
-                        echo "Il genere del film è: ".$movie_1 -> type."<br>";
+                        echo "Il genere del film è: ".$movie_1 -> printTypes()."<br>";
                         echo "L'anno in cui è stato prodotto il film è: ".$movie_1 -> year."<br>";
                         $movie_1 -> setAge($movie_1 -> year);
                         echo "Il film è stato prodotto: ".$movie_1 -> getAge()." anni fa.";
@@ -85,7 +80,7 @@
                         echo "Il titolo del film è: ".$movie_2 -> title."<br>";
                         echo "Il regista del film è: ".$movie_2 -> director."<br>";
                         echo "Il lingua originale del film è: ".$movie_2 -> language."<br>";
-                        echo "Il genere del film è: ".$movie_2 -> type."<br>";
+                        echo "Il genere del film è: ".$movie_2 -> printTypes()."<br>";
                         echo "L'anno in cui è stato prodotto il film è: ".$movie_2 -> year."<br>";
                         $movie_2 -> setAge($movie_2 -> year);
                         echo "Il film è stato prodotto: ".$movie_2 -> getAge()." anni fa.";
